@@ -5,18 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cosmic Rise</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Cosmic Rise</h1>
-        <div id="coin-display">Cosmo Coins: 0</div>
-        <button id="tap-button">Tap to Earn!</button>
-        <button id="upgrade-button">Upgrade (Cost: 5 Coins)</button>
-        <div id="upgrade-status"></div>
-        <h2>Leaderboard</h2>
-        <div id="leaderboard"></div>
+        <header>
+            <h1>🌌 Cosmic Rise 🌌</h1>
+            <div class="resources">
+                <span id="coinCount">Cosmo Coins: 0</span>
+            </div>
+        </header>
+        <main>
+            <button id="tapButton" class="interactive-button">💰 Tap to Earn Resources!</button>
+            <div class="upgrades">
+                <h2>🚀 Upgrades</h2>
+                <button id="upgradeButton" class="interactive-button">Upgrade - Cost: 10 Cosmo Coins</button>
+            </div>
+        </main>
+        <footer>
+            <div class="achievements">
+                <h2>🏆 Achievements</h2>
+                <ul id="achievementList"></ul>
+            </div>
+        </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
