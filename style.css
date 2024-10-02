@@ -1,31 +1,50 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
+let coinCount = 0;
+let upgradeCost = 10;
+let tapPower = 1;
+let achievements = [];
+
+// Update coin display
+function updateCoinDisplay() {
+    document.getElementById('coinCount').innerText = `Cosmo Coins: ${coinCount}`;
 }
 
-.container {
-    max-width: 600px;
-    margin: auto;
+// Check achievements and update the list
+function checkAchievements() {
+    if (coinCount >= 10 && !achievements.includes('First 10 Coins')) {
+        achievements.push('First 10 Coins');
+        addAchievement('First 10 Coins');
+    }
+    if (coinCount >= 50 && !achievements.includes('50 Coins Collected')) {
+        achievements.push('50 Coins Collected');
+        addAchievement('50 Coins Collected');
+    }
 }
 
-button {
-    background-color: #1e90ff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
+// Add an achievement to the list
+function addAchievement(achievement) {
+    const achievementList = document.getElementById('achievementList');
+    const li = document.createElement('li');
+    li.innerText = achievement;
+    li.style.color = '#ffeb3b'; // Gold color for achievements
+    achievementList.appendChild(li);
 }
 
-button:hover {
-    background-color: #4169e1;
-}
+// Add event listeners for buttons
+document.getElementById('tapButton').addEventListener('click', () => {
+    coinCount += tapPower;
+    updateCoinDisplay();
+    checkAchievements();
+});
 
-h2 {
-    margin-top: 20px;
-}
+document.getElementById('upgradeButton').addEventListener('click', () => {
+    if (coinCount >= upgradeCost) {
+        coinCount -= upgradeCost;
+        tapPower += 1; // Increase tapping power by 1
+        upgradeCost *= 2; // Double the cost for next upgrade
+        updateCoinDisplay();
+        alert(`Upgraded! Now you earn ${tapPower} coins per tap.`);
+        document.getElementById('upgradeButton').innerText = `Upgrade - Cost: ${upgradeCost} Cosmo Coins`;
+    } else {
+        alert('Not enough Cosmo Coins!');
+    }
+});
