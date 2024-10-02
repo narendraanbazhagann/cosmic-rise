@@ -1,73 +1,92 @@
-* {
-    box-sizing: border-box;
+let coinCount = 0;
+let upgradeCost = 10;
+let upgradeCardCost = 30;
+let cosmicEntityCost = 50;
+let tapPower = 1;
+let passiveIncome = 0;
+let cosmicEntitiesUnlocked = 0;
+let achievements = [];
+
+// Update coin display
+function updateCoinDisplay() {
+    document.getElementById('coinCount').innerText = `Cosmo Coins: ${coinCount}`;
+    document.getElementById('profitPerHour').innerText = `Profit per Hour: ${passiveIncome * 3600} Cosmo Coins`;
 }
 
-body {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
+// Check achievements and update the list
+function checkAchievements() {
+    if (coinCount >= 10 && !achievements.includes('First 10 Coins')) {
+        achievements.push('First 10 Coins');
+        addAchievement('First 10 Coins');
+    }
+    if (coinCount >= 50 && !achievements.includes('50 Coins Collected')) {
+        achievements.push('50 Coins Collected');
+        addAchievement('50 Coins Collected');
+    }
+    if (cosmicEntitiesUnlocked > 0 && !achievements.includes('Unlocked Cosmic Entity')) {
+        achievements.push('Unlocked Cosmic Entity');
+        addAchievement('Unlocked Cosmic Entity');
+    }
 }
 
-.container {
-    text-align: center;
-    background: radial-gradient(circle, rgba(58, 8, 58, 1) 0%, rgba(0, 0, 0, 1) 100%);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-    max-width: 600px;
+// Add an achievement to the list
+function addAchievement(achievement) {
+    const achievementList = document.getElementById('achievementList');
+    const li = document.createElement('li');
+    li.innerText = achievement;
+    li.style.color = '#ffeb3b'; // Gold color for achievements
+    achievementList.appendChild(li);
 }
 
-header {
-    margin-bottom: 20px;
-}
+// Add event listeners for buttons
+document.getElementById('tapButton').addEventListener('click', () => {
+    coinCount += tapPower;
+    updateCoinDisplay();
+    checkAchievements();
+});
 
-h1 {
-    font-size: 2.5em;
-}
+document.getElementById('upgradeButton').addEventListener('click', () => {
+    if (coinCount >= upgradeCost) {
+        coinCount -= upgradeCost;
+        tapPower += 1; // Increase tapping power by 1
+        upgradeCost *= 2; // Double the cost for next upgrade
+        updateCoinDisplay();
+        alert(`Upgraded! Now you earn ${tapPower} coins per tap.`);
+        document.getElementById('upgradeButton').innerText = `Upgrade - Cost: ${upgradeCost} Cosmo Coins`;
+    } else {
+        alert('Not enough Cosmo Coins!');
+    }
+});
 
-.resources {
-    font-size: 1.5em;
-    margin: 10px 0;
-}
+document.getElementById('upgradeCardButton').addEventListener('click', () => {
+    if (coinCount >= upgradeCardCost) {
+        coinCount -= upgradeCardCost;
+        passiveIncome += 1; // Increase passive income by 1 per hour
+        upgradeCardCost *= 2; // Double the cost for next upgrade card
+        updateCoinDisplay();
+        alert(`Upgrade Card Purchased! Passive income increased.`);
+        document.getElementById('upgradeCardButton').innerText = `Buy Upgrade Card - Cost: ${upgradeCardCost} Cosmo Coins`;
+    } else {
+        alert('Not enough Cosmo Coins!');
+    }
+});
 
-main {
-    margin: 20px 0;
-}
+document.getElementById('cosmicEntityButton').addEventListener('click', () => {
+    if (coinCount >= cosmicEntityCost) {
+        coinCount -= cosmicEntityCost;
+        cosmicEntitiesUnlocked += 1; // Unlock one cosmic entity
+        cosmicEntityCost *= 2; // Double the cost for next cosmic entity
+        updateCoinDisplay();
+        alert(`Cosmic Entity Unlocked! Total entities: ${cosmicEntitiesUnlocked}`);
+        document.getElementById('cosmicEntityButton').innerText = `Unlock Cosmic Entity - Cost: ${cosmicEntityCost} Cosmo Coins`;
+        document.getElementById('cosmicEntityButton').disabled = cosmicEntitiesUnlocked >= 5; // Limit to 5 entities
+    } else {
+        alert('Not enough Cosmo Coins!');
+    }
+});
 
-.interactive-button {
-    background-color: #ff5722;
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    cursor: pointer;
-    font-size: 1.2em;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.interactive-button:hover {
-    background-color: #e64a19;
-    transform: scale(1.05);
-}
-
-.upgrades {
-    margin-top: 30px;
-}
-
-footer {
-    margin-top: 50px;
-    background-color: #444;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.achievements {
-    text-align: left;
-}
+// Profit per hour calculation (every hour)
+setInterval(() => {
+    coinCount += passiveIncome; // Increase coins based on passive income
+    updateCoinDisplay();
+}, 3600000); // Every hour
