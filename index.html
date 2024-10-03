@@ -5,33 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cosmic Rise</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="container">
+    <div class="game-container" style="background-image: url('90467c26-6299-46f9-8f24-37ca75820a29.jpg.webp');">
         <header>
-            <h1>🌌 Cosmic Rise 🌌</h1>
-            <div class="resources">
-                <span id="coinCount">Cosmo Coins: 0</span>
-                <span id="profitPerHour">Profit per Hour: 0 Cosmo Coins</span>
+            <div class="menu">
+                <img src="your-avatar.png" alt="Avatar" class="avatar">
+                <div class="stats">
+                    <p>Coins per Hour: <span id="coinsPerHour">0</span></p>
+                    <p>Total Coins: <span id="totalCoins">0</span></p>
+                </div>
+                <button class="donate-button">Donate</button>
             </div>
         </header>
+
         <main>
-            <button id="tapButton" class="interactive-button">💰 Tap the Sun!</button>
-            <div class="upgrades">
-                <h2>🚀 Upgrades</h2>
-                <button id="upgradeButton" class="interactive-button">Upgrade - Cost: 10 Cosmo Coins</button>
-                <button id="upgradeCardButton" class="interactive-button" disabled>Buy Upgrade Card - Cost: 30 Cosmo Coins</button>
-                <button id="cosmicEntityButton" class="interactive-button" disabled>Unlock Cosmic Entity - Cost: 50 Cosmo Coins</button>
+            <div class="tap-section">
+                <button id="tapButton" class="tap-button">
+                    <img src="your-sun-image.png" alt="Tap to earn" class="tap-image">
+                </button>
             </div>
         </main>
+
         <footer>
-            <div class="achievements">
-                <h2>🏆 Achievements</h2>
-                <ul id="achievementList"></ul>
+            <div class="bottom-bar">
+                <button id="improve" class="bottom-btn">Improve</button>
+                <button id="city" class="bottom-btn">City</button>
+                <button id="mining" class="bottom-btn">Mining</button>
+                <button id="friends" class="bottom-btn">Friends</button>
+                <button id="quests" class="bottom-btn">Quests</button>
             </div>
         </footer>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
